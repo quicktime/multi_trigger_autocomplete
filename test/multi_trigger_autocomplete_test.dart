@@ -130,7 +130,7 @@ void main() {
               title: Text(user.name),
               onTap: () {
                 final autocomplete = MultiTriggerAutocomplete.of(context);
-                return autocomplete.acceptAutocompleteOption(user.name);
+                return autocomplete.acceptAutocompleteOption(user.name, endTag: '>');
               },
             );
           },
