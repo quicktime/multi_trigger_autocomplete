@@ -214,6 +214,7 @@ class MultiTriggerAutocompleteState extends State<MultiTriggerAutocomplete> {
 
   void acceptAutocompleteOption(
     String option, {
+    String? endTag,
     bool keepTrigger = true,
   }) {
     if (option.isEmpty) return;
@@ -228,7 +229,13 @@ class MultiTriggerAutocompleteState extends State<MultiTriggerAutocomplete> {
     var start = querySelection.baseOffset;
     if (!keepTrigger) start -= 1;
 
-    final end = querySelection.extentOffset;
+    var end = querySelection.extentOffset;
+
+    if (endTag != null) {
+      final alreadyContainsEndTag = text.substring(end).startsWith(endTag);
+      if (!alreadyContainsEndTag) option += endTag;
+      end += endTag.length;
+    }
 
     final alreadyContainsSpace = text.substring(end).startsWith(' ');
     // Having extra space helps dismissing the auto-completion view.
