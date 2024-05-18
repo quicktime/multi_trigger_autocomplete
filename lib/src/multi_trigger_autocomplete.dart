@@ -183,15 +183,13 @@ class MultiTriggerAutocomplete extends StatefulWidget {
 
   /// Returns the nearest [StreamAutocomplete] ancestor of the given context.
   static MultiTriggerAutocompleteState of(BuildContext context) {
-    final state =
-        context.findAncestorStateOfType<MultiTriggerAutocompleteState>();
+    final state = context.findAncestorStateOfType<MultiTriggerAutocompleteState>();
     assert(state != null, 'MultiTriggerAutocomplete not found');
     return state!;
   }
 
   @override
-  MultiTriggerAutocompleteState createState() =>
-      MultiTriggerAutocompleteState();
+  MultiTriggerAutocompleteState createState() => MultiTriggerAutocompleteState();
 }
 
 class MultiTriggerAutocompleteState extends State<MultiTriggerAutocomplete> {
@@ -206,10 +204,7 @@ class MultiTriggerAutocompleteState extends State<MultiTriggerAutocomplete> {
 
   // True if the state indicates that the options should be visible.
   bool get _shouldShowOptions {
-    return !_hideOptions &&
-        _focusNode.hasFocus &&
-        _currentQuery != null &&
-        _currentTrigger != null;
+    return !_hideOptions && _focusNode.hasFocus && _currentQuery != null && _currentTrigger != null;
   }
 
   void acceptAutocompleteOption(
@@ -233,18 +228,18 @@ class MultiTriggerAutocompleteState extends State<MultiTriggerAutocomplete> {
 
     if (endTag != null) {
       final alreadyContainsEndTag = text.substring(end).startsWith(endTag);
-      if (!alreadyContainsEndTag) option += endTag;
-      end += endTag.length;
+      if (!alreadyContainsEndTag) option += '$endTag ';
+      end += endTag.length + 1;
     }
 
-    final alreadyContainsSpace = text.substring(end).startsWith(' ');
-    // Having extra space helps dismissing the auto-completion view.
-    if (!alreadyContainsSpace) option += ' ';
+    // final alreadyContainsSpace = text.substring(end).startsWith(' ');
+    // // Having extra space helps dismissing the auto-completion view.
+    // if (!alreadyContainsSpace) option += ' ';
 
     var selectionOffset = start + option.length;
     // In case the extra space is already there, we need to move the cursor
     // after the space.
-    if (alreadyContainsSpace) selectionOffset += 1;
+    // if (alreadyContainsSpace) selectionOffset += 1;
 
     final newText = text.replaceRange(start, end, option);
     final newSelection = TextSelection.collapsed(offset: selectionOffset);
@@ -339,8 +334,7 @@ class MultiTriggerAutocompleteState extends State<MultiTriggerAutocomplete> {
 
   // Handle a potential change in textEditingController by properly disposing of
   // the old one and setting up the new one, if needed.
-  void _updateTextEditingController(
-      TextEditingController? old, TextEditingController? current) {
+  void _updateTextEditingController(TextEditingController? old, TextEditingController? current) {
     if ((old == null && current == null) || old == current) {
       return;
     }
@@ -381,8 +375,7 @@ class MultiTriggerAutocompleteState extends State<MultiTriggerAutocomplete> {
   @override
   void initState() {
     super.initState();
-    _textEditingController = widget.textEditingController ??
-        TextEditingController.fromValue(widget.initialValue);
+    _textEditingController = widget.textEditingController ?? TextEditingController.fromValue(widget.initialValue);
     _textEditingController.addListener(_onChangedField);
     _focusNode = widget.focusNode ?? FocusNode();
     _focusNode.addListener(_onChangedFocus);
