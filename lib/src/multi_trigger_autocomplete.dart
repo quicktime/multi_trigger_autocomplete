@@ -226,20 +226,20 @@ class MultiTriggerAutocompleteState extends State<MultiTriggerAutocomplete> {
 
     var end = querySelection.extentOffset;
 
-    if (endTag != null) {
-      final alreadyContainsEndTag = text.substring(end).startsWith(endTag);
-      if (!alreadyContainsEndTag) option += '$endTag ';
-      end += endTag.length + 1;
-    }
+    // if (endTag != null) {
+    //   final alreadyContainsEndTag = text.substring(end).startsWith(endTag);
+    //   if (!alreadyContainsEndTag) option += '$endTag ';
+    //   end += endTag.length + 1;
+    // }
 
-    // final alreadyContainsSpace = text.substring(end).startsWith(' ');
-    // // Having extra space helps dismissing the auto-completion view.
-    // if (!alreadyContainsSpace) option += ' ';
+    final alreadyContainsSpace = text.substring(end).startsWith(' ');
+    // Having extra space helps dismissing the auto-completion view.
+    if (!alreadyContainsSpace) option += ' ';
 
     var selectionOffset = start + option.length;
     // In case the extra space is already there, we need to move the cursor
     // after the space.
-    // if (alreadyContainsSpace) selectionOffset += 1;
+    if (alreadyContainsSpace) selectionOffset += 1;
 
     final newText = text.replaceRange(start, end, option);
     final newSelection = TextSelection.collapsed(offset: selectionOffset);
